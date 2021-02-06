@@ -1,0 +1,50 @@
+from bs4 import BeautifulSoup
+import requests as req
+
+file1 = open('ips.txt', 'r')
+Lines = file1.readlines()
+
+result = []
+ips = []
+
+for line in Lines:
+    ips.append(line.strip())
+    #print(line.strip())
+
+
+count = 0;
+ipscount = len(ips)
+url = "https://www.abuseipdb.com/check/"
+for i in ips:
+    
+    res1 = url + i
+    response = req.get(res1)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    img = soup.find_all('p',attrs={'class': ''})
+    img1 = soup.find_all('span',attrs={'class':'click-to-copy'})
+    
+    flag=0;
+    for tag1 in img1:
+        print(tag1.text.strip())
+        result.append(tag1.text.strip())
+    for tag in img:
+        if(flag==0):
+            flag += 1
+            continue
+        elif(flag==1):    
+            print(tag.text.strip())
+            result.append(tag.text.strip())
+            flag=0;
+            break
+    count += 1;
+    if(count == ipscount):
+        break
+#print (img)
+
+
+file2 = open('results.txt','w')
+for j in result:
+    file2.writelines(j)
+    file2.write('\n')
+
+file1.close()
