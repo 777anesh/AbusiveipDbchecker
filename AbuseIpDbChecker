@@ -21,12 +21,11 @@ for i in ips:
     response = req.get(res1)
     soup = BeautifulSoup(response.text, 'html.parser')
     img = soup.find_all('p',attrs={'class': ''})
-    img1 = soup.find_all('span',attrs={'class':'click-to-copy'})
+    #img1 = soup.find_all('span',attrs={'class':'click-to-copy'})
     
+    print(i)
+    result.append(i)
     flag=0;
-    for tag1 in img1:
-        print(tag1.text.strip())
-        result.append(tag1.text.strip())
     for tag in img:
         if(flag==0):
             flag += 1
@@ -39,7 +38,6 @@ for i in ips:
     count += 1;
     if(count == ipscount):
         break
-#print (img)
 
 
 file2 = open('results.txt','w')
@@ -48,3 +46,4 @@ for j in result:
     file2.write('\n')
 
 file1.close()
+
