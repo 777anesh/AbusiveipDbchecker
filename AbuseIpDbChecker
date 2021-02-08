@@ -46,4 +46,5 @@ for j in result:
     file2.write('\n')
 
 file1.close()
+file2.close()
 
